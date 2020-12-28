@@ -56,7 +56,7 @@ interface Week {
 }
 
 const App = () => {
-    const yearsToFetch: number[] = [2017, 2018, 2019, 2020];
+    const yearsToFetch: number[] = [2015,2016,2017,2018,2019,2020];
     const [weeks, setWeeks] = useState<any>([]);
     const [closeGames, setCloseGames] = useState<any>([]);
     const [seasonTitle, setSeasonTitle] = useState("");
@@ -81,18 +81,14 @@ const App = () => {
 
                 d.push(data);
 
-                console.log(data);
-
-                if(i === yearsToFetch.length - 1) {
-                    seasonType = data[data.length-1].seasonType;
-                    week = data[data.length-1].week;
+                if (i === yearsToFetch.length - 1) {
+                    seasonType = data[data.length - 1].seasonType;
+                    week = data[data.length - 1].week;
                 }
             }
 
             setWeeks(d);
 
-            
-            console.log(seasonType, week, yearsToFetch[yearsToFetch.length - 1]);
             getCloseGames(seasonType, week, yearsToFetch[yearsToFetch.length - 1]);
         }
         getCalendar();
@@ -150,7 +146,7 @@ const App = () => {
             return;
         } else {
             return (
-                <NavDropdown id={getId(yearsToFetch[index])} title={getMenuTitle(yearsToFetch[index])}>
+                <NavDropdown id={getId(yearsToFetch[index])} title={getMenuTitle(yearsToFetch[index])} key={getId(yearsToFetch[index])} className="year-dropdown">
 
                     {weeks[index].map((week: { firstGameStart: string | number | null | undefined; seasonType: string; week: number; }, i: any) => (
                         <Nav.Link key={week.firstGameStart} eventKey
@@ -170,7 +166,7 @@ const App = () => {
 
     return (
         <Container className="main">
-            <Navbar bg="light" expand="xl" collapseOnSelect sticky="top">
+            <Navbar expand="xl" collapseOnSelect >
                 <Navbar.Brand className="title">Close Ones</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
