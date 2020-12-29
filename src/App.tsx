@@ -149,9 +149,9 @@ const App = () => {
                 <NavDropdown id={getId(yearsToFetch[index])} title={getMenuTitle(yearsToFetch[index])} key={getId(yearsToFetch[index])} className="year-dropdown">
 
                     {weeks[index].map((week: { firstGameStart: string | number | null | undefined; seasonType: string; week: number; }, i: any) => (
-                        <Nav.Link key={week.firstGameStart} eventKey
+                        <Nav.Link key={week.firstGameStart} eventKey className="weekOfYear"
                             onClick={() => getCloseGames(week.seasonType, week.week, yearsToFetch[index])}
-                            style={{ textTransform: 'capitalize' }}>{getWeekTitle(week.seasonType, week.week)}</Nav.Link>
+                            >{getWeekTitle(week.seasonType, week.week)}</Nav.Link>
                     ))
                     }
 
