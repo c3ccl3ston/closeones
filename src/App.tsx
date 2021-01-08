@@ -56,7 +56,7 @@ interface Week {
 }
 
 const App = () => {
-    const yearsToFetch: number[] = [2015,2016,2017,2018,2019,2020];
+    const yearsToFetch: number[] = [2015, 2016, 2017, 2018, 2019, 2020];
     const [weeks, setWeeks] = useState<any>([]);
     const [closeGames, setCloseGames] = useState<any>([]);
     const [seasonTitle, setSeasonTitle] = useState("");
@@ -151,7 +151,7 @@ const App = () => {
                     {weeks[index].map((week: { firstGameStart: string | number | null | undefined; seasonType: string; week: number; }, i: any) => (
                         <Nav.Link key={week.firstGameStart} eventKey className="weekOfYear"
                             onClick={() => getCloseGames(week.seasonType, week.week, yearsToFetch[index])}
-                            >{getWeekTitle(week.seasonType, week.week)}</Nav.Link>
+                        >{getWeekTitle(week.seasonType, week.week)}</Nav.Link>
                     ))
                     }
 
@@ -181,9 +181,12 @@ const App = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <Container>
+            <div className="stickyheader">
                 <span className="week-header-season-type">{seasonTitle}</span>
-                <h2 className="week-header">{weekTitle}</h2><hr />
+                <h2 className="week-header">{weekTitle}</h2>
+                </div>
+            <Container>
+        
 
                 {closeGames.map((closeGame: Game) => (
                     <CloseGame
