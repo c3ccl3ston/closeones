@@ -181,10 +181,8 @@ const App = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <div className="stickyheader">
                 <span className="week-header-season-type">{seasonTitle}</span>
                 <h2 className="week-header">{weekTitle}</h2>
-                </div>
             <Container>
         
 
