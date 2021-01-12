@@ -16,6 +16,20 @@ h1 {
     align-items: center;
 }
 
+@media (prefers-color-scheme: light) {
+    body {
+        background: #FFF;
+        color: #333;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body, .card {
+        background: #333;
+        color: #FFF;
+    }
+}
+
 #root {
     width: 100%;
 }
@@ -187,4 +201,10 @@ nav {
     z-index: 3;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
     margin-bottom: 15px;
+}
+
+.navbar-nav .dropdown-menu {
+    position: static;
+    float: none;
+    background-color: #4267B2;
 }
