@@ -1,62 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import CloseGame from './CloseGame';
-import "./App.css";
+import './App.css';
 import { Container, NavDropdown } from 'react-bootstrap';
 import { Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-interface Team {
-    id: number;
-    school: string;
-    mascot: string;
-    abbreviation: string;
-    alt_name1: string;
-    alt_name2: string;
-    alt_name3: string;
-    conference: string;
-    division: string;
-    color: string;
-    alt_color: string;
-    logos: string[];
-}
-
-interface Game {
-    id: number;
-    season: number;
-    week: number;
-    season_type: string;
-    start_date: string;
-    start_time_tbd: boolean;
-    neutral_site: boolean;
-    conference_game: boolean;
-    attendance: number;
-    venur_id: number;
-    venue: string;
-    home_id: number;
-    home_team: string;
-    home_conference: string;
-    home_points: number;
-    home_line_scores: number[];
-    home_post_win_prob: string;
-    away_id: number;
-    away_team: string;
-    away_conference: string;
-    away_points: number;
-    away_line_scores: number[];
-    away_post_win_prob: string;
-    excitement_index: string;
-}
-
-interface Week {
-    season: string;
-    week: number;
-    seasonType: string;
-    firstGameStart: string;
-    lastGameStart: string;
-}
+import Team from './interfaces/Team';
+import Game from './interfaces/Game';
 
 const App = () => {
-    const yearsToFetch: number[] = [2015, 2016, 2017, 2018, 2019, 2020];
+    const yearsToFetch: number[] = [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
     const [weeks, setWeeks] = useState<any>([]);
     const [closeGames, setCloseGames] = useState<any>([]);
     const [seasonTitle, setSeasonTitle] = useState("");
@@ -72,24 +24,26 @@ const App = () => {
 
         const getCalendar = async () => {
             const d = [];
-            var seasonType;
-            var week;
 
             for (var i = 0; i < yearsToFetch.length; i++) {
                 const response = await fetch("https://api.collegefootballdata.com/calendar?year=" + yearsToFetch[i]);
                 const data = await response.json();
 
-                d.push(data);
+                const validYear = Object.keys(data).length > 0;
 
-                if (i === yearsToFetch.length - 1) {
-                    seasonType = data[data.length - 1].seasonType;
-                    week = data[data.length - 1].week;
+                if (validYear) {
+                    d.push(data);
                 }
             }
 
+            const currentSeason = d[d.length - 1];
+            const seasonType = currentSeason[currentSeason.length - 1].seasonType;
+            const week = currentSeason[currentSeason.length - 1].week;
+            const season = currentSeason[currentSeason.length - 1].season;
+
             setWeeks(d);
 
-            getCloseGames(seasonType, week, yearsToFetch[yearsToFetch.length - 1]);
+            getCloseGames(seasonType, week, season);
         }
         getCalendar();
         getAllTeams();
@@ -181,10 +135,10 @@ const App = () => {
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
-                <span className="week-header-season-type">{seasonTitle}</span>
-                <h2 className="week-header">{weekTitle}</h2>
+            <span className="week-header-season-type">{seasonTitle}</span>
+            <h2 className="week-header">{weekTitle}</h2>
             <Container>
-        
+
 
                 {closeGames.map((closeGame: Game) => (
                     <CloseGame
